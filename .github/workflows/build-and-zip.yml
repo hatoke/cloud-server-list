@@ -20,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
@@ -51,7 +51,7 @@ jobs:
         with:
           tag_name: "v${{ github.run_number }}"
           release_name: "Build Release ${{ github.run_number }}"
-          body: "fontawesome ve nofontawesome."
+          body: "Bu sürüm iki farklı build içerir: fontawesome ve nofontawesome."
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -63,6 +63,7 @@ jobs:
           asset_path: build-fontawesome.zip
           asset_name: build-fontawesome.zip
           asset_content_type: application/zip
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload NoFontawesome Build to Release
         uses: actions/upload-release-asset@v1
@@ -71,3 +72,4 @@ jobs:
           asset_path: build-nofontawesome.zip
           asset_name: build-nofontawesome.zip
           asset_content_type: application/zip
+          token: ${{ secrets.GITHUB_TOKEN }}
