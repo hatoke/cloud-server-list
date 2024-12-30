@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Release version'
+        required: true
+        default: 'v1.0.0'
 
 jobs:
   build:
@@ -15,7 +21,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -44,9 +50,18 @@ jobs:
     
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Download all artifacts
         uses: actions/download-artifact@v4
+        with:
+          name: build-fontawesome
+          path: ./build-fontawesome
+
+      - name: Download all artifacts (no fontawesome)
+        uses: actions/download-artifact@v4
+        with:
+          name: build-nofontawesome
+          path: ./build-nofontawesome
 
       - name: Create Release
         env:
